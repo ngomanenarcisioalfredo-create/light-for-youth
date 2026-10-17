@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<section class="cartao">
+  {% with mensagens = get_flashed_messages(with_categories=true) %}
+    {% if mensagens %}
+      <div class="alertas">
+        {% for cat, texto in mensagens %}<div class="alerta {{ cat }}">{{ texto }}</div>{% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <form method="post" action="{{ url_for('enviar') }}" id="formulario" novalidate>
+    <h2>1. Como quer enviar?</h2>
+    <div class="escolha">
+      <label class="opcao">
+        <input type="radio" name="tipo" value="anonima" {{ 'checked' if form.get('tipo','anonima')=='anonima' }}>
+        <span class="caixa">
+          <strong>🕶️ Anónima</strong>
+          <small>Ninguém saberá quem enviou. Não guardamos o seu nome.</small>
+        </span>
+      </label>
+      <label class="opcao">
+        <input type="radio" name="tipo" value="identificada" {{ 'checked' if form.get('tipo')=='identificada' }}>
+        <span class="caixa">
+          <strong>🙋 Identificada</strong>
+          <small>Diga quem é para podermos responder-lhe.</small>
+        </span>
+      </label>
+    </div>
+
+    <div id="dados-pessoais" class="escondido">
+      <h2>2. Os seus dados</h2>
+      <div class="grelha">
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" name="nome" value="{{ form.get('nome','') }}" placeholder="O seu nome">
+        </div>
+        <div class="campo">
+          <label for="curso">Curso</label>
+          <input type="text" id="curso" name="curso" value="{{ form.get('curso','') }}" placeholder="Ex.: Informática Básica">
+        </div>
+        <div class="campo">
+          <label for="horario">Horário</label>
+          <input type="text" id="horario" name="horario" value="{{ form.get('horario','') }}" placeholder="Ex.: 08h00 - 10h00">
+        </div>
+        <div class="campo">
+          <label for="contacto">Telefone ou e-mail (opcional)</label>
+          <input type="text" id="contacto" name="contacto" value="{{ form.get('contacto','') }}" placeholder="Para lhe respondermos">
+        </div>
+      </div>
+    </div>
+
+    <h2 id="titulo-msg">2. A sua reclamação</h2>
+    <div class="campo">
+      <label for="categoria">Categoria</label>
+      <select id="categoria" name="categoria">
+        {% for c in categorias %}
+          <option value="{{ c }}" {{ 'selected' if form.get('categoria')==c }}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="campo">
+      <label for="assunto">Assunto</label>
+      <input type="text" id="assunto" name="assunto" maxlength="120" value="{{ form.get('assunto','') }}" placeholder="Resuma em poucas palavras" required>
+    </div>
+    <div class="campo">
+      <label for="mensagem">Mensagem</label>
+      <textarea id="mensagem" name="mensagem" rows="6" maxlength="3000" placeholder="Explique com detalhes o que aconteceu..." required>{{ form.get('mensagem','') }}</textarea>
+      <small class="contador"><span id="conta">0</span>/3000</small>
+    </div>
+
+    <!-- campo armadilha para robôs -->
+    <div class="armadilha" aria-hidden="true">
+      <input type="text" name="website" tabindex="-1" autocomplete="off">
+    </div>
+
+    <button type="submit" class="botao">Enviar reclamação</button>
+    <p class="nota" id="nota-anonima">🔒 Na opção anónima nenhum dado pessoal é enviado ou guardado.</p>
+  </form>
+</section>
+{% endblock %}

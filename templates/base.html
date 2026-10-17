@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Caixa de Reclamações{% endblock %} | Light for Youth</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/logo.jpg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <div class="faixa"><span></span><span></span><span></span></div>
+    <div class="topo-conteudo">
+      <img src="{{ url_for('static', filename='img/logo.jpg') }}" alt="Logotipo Light for Youth" class="logo">
+      <h1>Caixa de Reclamações</h1>
+      <p>A sua voz ajuda-nos a melhorar. Fale connosco com total liberdade.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape">
+    <div class="faixa"><span></span><span></span><span></span></div>
+    <p><strong>Associação Jovem Visionário para a Promoção do Desenvolvimento Local</strong></p>
+    <p>Light for Youth &middot; Caixa de Reclamações</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

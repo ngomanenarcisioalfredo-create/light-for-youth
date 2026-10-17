@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Obrigado{% endblock %}
+{% block conteudo %}
+<section class="cartao centro">
+  <div class="sol">☀️</div>
+  <h2>Reclamação recebida!</h2>
+  <p>Obrigado por nos ajudar a melhorar. A direção da escola vai analisar a sua mensagem.</p>
+  <a class="botao" href="{{ url_for('index') }}">Enviar outra</a>
+</section>
+{% endblock %}
